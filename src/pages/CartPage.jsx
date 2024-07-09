@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import SearchAccount from "../components/SearchAccount";
 import NavBar from "../components/NavBar";
 import CheckoutRow from "../components/CheckoutRow";
@@ -135,9 +136,17 @@ function CartPage() {
                       <p className="text-stone-500">Free Shipping</p>
                     </div>
                     <p className="text-right text-stone-600">
-                      Shipping to <span className="font-bold text-black">14, AmoreGardens</span>
+                      Shipping to{" "}
+                      <span className="font-bold text-black">
+                        14, AmoreGardens
+                      </span>
                     </p>
-                    <a href="" className="text-base text-[#08319CCC] font-medium">Change Address</a>
+                    <a
+                      href=""
+                      className="text-base text-[#08319CCC] font-medium"
+                    >
+                      Change Address
+                    </a>
                   </div>
                 </div>
                 <hr className="border-stone-400 ml-10 mr-5 md:mr-7 my-5" />
@@ -146,10 +155,12 @@ function CartPage() {
                   <p className="font-bold">$3005.00 </p>
                 </div>
                 <hr className="border-stone-400 mt-5 mb-10" />
-                <Button
-                  buttonText={"Proceed to Checkout"}
-                  className={"md:px-[137px] ml-10 mr-5 md:mr-7"}
-                />
+                <Link to="/checkout">
+                  <Button
+                    buttonText={"Proceed to Checkout"}
+                    className={"md:px-[137px] ml-10 mr-5 md:mr-7"}
+                  />
+                </Link>
               </div>
             </div>
           </section>

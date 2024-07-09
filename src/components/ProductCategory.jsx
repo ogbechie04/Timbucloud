@@ -3,7 +3,7 @@ import { FaChevronRight } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa6";
 
 function ProductCategory({categoryName, className}) {
-    const baseClasses = "flex bg-mainblue-background px-5 lg:py-3 py-1.5 items-center text-mainblue justify-between gap-2 lg:gap-0 flex-1 basis-[calc(30%-16px)] lg:basis-0";
+    const baseClasses = "flex bg-mainblue-background px-5 lg:py-3 py-1.5 items-center text-mainblue justify-between gap-2 lg:gap-0 flex-1 basis-[calc(30%-16px)] lg:basis-0 hover:bg-mainblue hover:text-white";
     const combinedClasses = `${baseClasses} ${className || ""}`;
 
     return (

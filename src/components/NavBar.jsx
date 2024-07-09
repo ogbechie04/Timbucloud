@@ -18,7 +18,7 @@ function NavBar() {
         </Link>
         <div className="lg:flex gap-6 items-center hidden">
           <ul className="flex gap-20">
-            <li className="font-bold">
+            <li className="">
               <a href="">PRODUCTS</a>
             </li>
             <li>
