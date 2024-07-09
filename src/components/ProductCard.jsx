@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import rating from "../assets/rating.jpg";
+import rating from "../assets/ratings.svg";
 import blackAirpods from "../assets/black-airpods.jpg";
 
 function ProductCard({
