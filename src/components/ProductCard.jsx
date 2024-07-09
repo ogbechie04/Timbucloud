@@ -4,12 +4,12 @@ import rating from "../assets/rating.jpg";
 import blackAirpods from "../assets/black-airpods.jpg";
 
 function ProductCard({
-  image = { blackAirpods },
+  image,
   imageAlt,
-  productName = "butterfly",
-  price = "$500",
+  productName,
+  price,
   oldPrice,
-  description = "good stuff, what the heck is this music?",
+  description,
 }) {
   return (
     <>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import SearchAccount from "../components/SearchAccount";
 import NavBar from "../components/NavBar";
 import ProductCategory from "../components/ProductCategory";
@@ -13,6 +14,9 @@ import controller from "../assets/controller.svg";
 import iPhone from "../assets/iphone.svg";
 
 function ListingPage() {
+  const location = useLocation();
+  console.log(location)
+  
   return (
     <>
       <div className="mx-5 lg:mx-20 mt-5 lg:mt-10">
@@ -76,8 +80,12 @@ function ListingPage() {
               <div className="text-xl lg:text-2xl font-bold text-mainblue leading-7 flex justify-between font-inter">
                 <p>FEATURED PRODUCTS</p>
                 <div className="lg:flex gap-8 hidden">
-                  <a href="" className="hover:underline">Promo</a>
-                  <a href="" className="hover:underline">New Arrival</a>
+                  <a href="" className="hover:underline">
+                    Promo
+                  </a>
+                  <a href="" className="hover:underline">
+                    New Arrival
+                  </a>
                 </div>
               </div>
               <div className="grid gap-y-10 md:grid-cols-2 md:gap-x-20 md:gap-y-14">
@@ -117,11 +125,10 @@ function ListingPage() {
             <Button buttonText={"VIEW MORE PRODUCTS"} className={"p-3"} />
           </section>
         </main>
-        </div>
-        <footer className="lg:mx-20">
-            <Footer />
-        </footer>
-
+      </div>
+      <footer className="lg:mx-20">
+        <Footer />
+      </footer>
     </>
   );
 }

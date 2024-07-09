@@ -1,12 +1,18 @@
-import { React } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ListingPage from "./pages/ListingPage";
-import Footer from "./components/Footer";
+import CheckoutPage from "./pages/CheckoutPage";
+import CartPage from "./pages/CartPage";
 
 function App() {
   return (
-    <>
-    <ListingPage />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ListingPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/cart" element={<CartPage />} />
+      </Routes>
+    </Router>
   );
 }
 
