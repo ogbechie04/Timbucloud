@@ -1,5 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+import { useLocation, Link } from "react-router-dom";
 import SearchAccount from "../components/SearchAccount";
 import NavBar from "../components/NavBar";
 import ProductCategory from "../components/ProductCategory";
@@ -15,8 +17,41 @@ import iPhone from "../assets/iphone.svg";
 
 function ListingPage() {
   const location = useLocation();
-  console.log(location)
-  
+  console.log(location);
+
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const size = 10;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/products?organization_id=115305807e2746e893b60d4d9ecee23b&reverse_sort=false&page=${currentPage}&size=${size}&Appid=V1X2GKWL8HPEEAP&Apikey=8b84c46837194a0ea1f90fe7b452c5d420240712130446321603`
+        );
+        const data = await response.json();
+
+        if (data && data.items && Array.isArray(data.items)) {
+          setProducts(data.items);
+          const calculatedTotalPages = Math.ceil(data.total / size);
+          setTotalPages(calculatedTotalPages); // Calculate total pages
+        } else {
+          throw new Error("Unexpected data format");
+        }
+
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, size]);
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
+
   return (
     <>
       <div className="mx-5 lg:mx-20 mt-5 lg:mt-10">
@@ -75,8 +110,8 @@ function ListingPage() {
               <img src={userImage} alt="user-image" />
             </div>
           </section>
-          <section className="w-fit flex flex-col items-center lg:gap-[92px] gap-10">
-            <div className="flex flex-col gap-5 md:gap-10">
+          <section className="md:w-full w-fit flex flex-col items-center lg:gap-[92px] gap-10">
+            <div className="flex flex-col gap-5 md:gap-10 w-full">
               <div className="text-xl lg:text-2xl font-bold text-mainblue leading-7 flex justify-between font-inter">
                 <p>FEATURED PRODUCTS</p>
                 <div className="lg:flex gap-8 hidden">
@@ -88,41 +123,40 @@ function ListingPage() {
                   </a>
                 </div>
               </div>
-              <div className="grid gap-y-10 md:grid-cols-2 md:gap-x-20 md:gap-y-14">
-                <ProductCard
-                  image={laptop}
-                  imageAlt={"laptop"}
-                  productName="13’ Macbook Air 2020"
-                  price="$1080"
-                  oldPrice="$1200"
-                  description="Lightweight, powerful, and efficient. With the latest M2 chip, stunning Retina display, and up to 18 hours of battery life, it's perfect for work and play."
-                />
-                <ProductCard
-                  image={airpods}
-                  imageAlt={"airpods"}
-                  productName="Airpods pro"
-                  price="$400"
-                  description="Experience superior sound with active noise cancellation, a customizable fit, and seamless integration with your Apple devices for an unparalleled listening experience."
-                />
-                <ProductCard
-                  image={controller}
-                  imageAlt={"controller"}
-                  productName="Easy SMX Game Controller"
-                  price="$95"
-                  oldPrice="$100"
-                  description="Elevate your gaming with ergonomic design, responsive buttons, and customizable features for a truly immersive and precise gameplay experience."
-                />
-                <ProductCard
-                  image={iPhone}
-                  imageAlt={"iPhone"}
-                  productName="iPhone XSMAX"
-                  price="$720"
-                  oldPrice="$800"
-                  description="Enjoy a stunning 6.5-inch Super Retina display, powerful A12 Bionic chip, and advanced dual-camera system for exceptional performance and photography."
+              <div className="flex flex-col items-center gap-2.5 md:gap-5">
+                <div className="grid gap-y-10 md:grid-cols-2 md:gap-x-40 md:gap-y-14 ">
+                  {products.map((product) => (
+                    <Link key={product.id} to={`/ProductPage/${product.name}`}>
+                    <ProductCard
+                      key={product.id}
+                      image={product.photos[0].url}
+                      imageAlt={product.name}
+                      productName={product.name}
+                      price={product.current_price[0]["NGN"][0]}
+                      oldPrice={product.oldPrice}
+                      description={product.description}
+                      id={product.id}
+                    />
+                    </Link>
+                  ))}
+                </div>
+                <ReactPaginate
+                  className="list-none flex justify-center items-center font-roboto font-normal text-base"
+                  pageCount={totalPages}
+                  pageRangeDisplayed={4}
+                  marginPagesDisplayed={2}
+                  onPageChange={handlePageChange}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  pageClassName="page-item"
+                  previousClassName="page-item"
+                  nextClassName="page-item"
+                  previousLabel="Previous"
+                  nextLabel="Next"
                 />
               </div>
             </div>
-            <Button buttonText={"VIEW MORE PRODUCTS"} className={"p-3"} />
+            {/* <Button buttonText={"VIEW MORE PRODUCTS"} className={"p-3"} /> */}
           </section>
         </main>
       </div>

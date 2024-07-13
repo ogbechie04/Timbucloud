@@ -7,3 +7,26 @@
 :root {
     background-color: #F5F7FF;
 }
+
+/* Styling for Pagination List */
+
+  .page-item {
+    color: rgba(0, 0, 0, 0.659);
+    margin-inline-end: 8px;
+    background-color: rgba(211, 211, 211, 0.628);
+    border: 2px solid rgba(211, 211, 211, 0.628);
+    padding-inline: 12px;
+    padding-block: 2px;
+    border-radius: 5px;
+  }
+
+  .page-item:hover {
+    color: #08319C;
+    border: 2px solid #08319C;
+    background-color: #fff;
+  }
+
+  .active {
+    background-color: #08319C;
+    color: #F5F7FF;
+  }

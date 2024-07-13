@@ -1,0 +1,66 @@
+import React from "react";
+import { useState, useEffect } from "react";
+import ProductCard from "../components/ProductCard";
+import { Link, useParams } from "react-router-dom";
+import NavBar from "../components/NavBar";
+
+function ProductPage() {
+  const { name } = useParams();
+  const [products, setProducts] = useState([]);
+  const size = 10; // Assuming a page size of 10
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/products?organization_id=115305807e2746e893b60d4d9ecee23b&reverse_sort=false&page=1&size=${size}&Appid=V1X2GKWL8HPEEAP&Apikey=8b84c46837194a0ea1f90fe7b452c5d420240712130446321603`
+        );
+        const data = await response.json();
+
+        if (data && data.items && Array.isArray(data.items)) {
+          setProducts(data.items);
+          console.log(products);
+        } else {
+          throw new Error("Unexpected data format");
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchData();
+  }, [name]); // Dependencies for useEffect
+
+  return (
+    <>
+      <div className="flex flex-col mx-5 lg:mx-20 mt-5 lg:mt-10 md:gap-10 gap-5">
+        <NavBar />
+        <div className="flex items-center flex-col gap-4">
+          <h1 className="md:text-3xl text-2xl font-bold">
+            Product Details for: <span className="text-mainblue">{name}</span>
+          </h1>
+          <div className="max-w-96">
+            {products
+              .filter((product) => product.name === name)
+              .map((product) => (
+                <ProductCard
+                  key={product.id}
+                  image={product.photos[0].url}
+                  imageAlt={product.name}
+                  productName={product.name}
+                  price={product.current_price[0]["NGN"][0]}
+                  oldPrice={product.oldPrice}
+                  description={product.description}
+                  id={product.id}
+                />
+              ))}
+          </div>
+          <Link to={'/'}><a href="" className="font-medium text-lg hover:underline">Return to Home</a></Link>
+
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default ProductPage;

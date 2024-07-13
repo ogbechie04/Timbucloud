@@ -159,7 +159,7 @@ function CheckoutPage() {
                 <div className="flex md:gap-32 gap-20 justify-between items-start px-6 md:pr-7">
                   <p className="font-semibold">Shipping</p>
                   <div className="flex flex-col items-end gap-2">
-                    <div className="flex justify-end items-center gap-1">
+                    <div className="flex justify-end items-center gap-1 text-nowrap">
                       <img src={checkbox1} alt="" />
                       <p>
                         Flat rate: <span className="font-bold">$30.00</span>

@@ -1,22 +1,42 @@
 import React from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SearchAccount from "../components/SearchAccount";
 import NavBar from "../components/NavBar";
 import CheckoutRow from "../components/CheckoutRow";
 import Button from "../components/Button";
 import ProductCard from "../components/ProductCard";
-import cartLaptop from "../assets/cart-laptop.svg";
-import cartController from "../assets/cart-controller.svg";
-import cartIphone from "../assets/cart-iphone.svg";
-import mobileCartLaptop from "../assets/mobile-cart-laptop.svg";
-import mobileCartController from "../assets/mobile-cart-controller.svg";
-import mobileCartIphone from "../assets/mobile-cart-iPhone.svg";
+import useCart from "../hooks/useCart";
 import smallAirpods from "../assets/small-airpods.svg";
 import blackAirpods from "../assets/black-airpods.svg";
 import checkbox1 from "../assets/checkbox-1.svg";
 import checkbox2 from "../assets/checkbox-2.svg";
 
 function CartPage() {
+  const { cart, removeItem } = useCart();
+  const [cartItems, setCartItems] = useState(cart);
+
+  useEffect(() => {
+    setCartItems(cart);
+  }, [cart]);
+
+  const updateQuantity = (id, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const subTotal = cartItems.reduce(
+    (total, item) => total + item.price * (item.quantity || 1),
+    0
+  );
+
+  const shippingCost = 30
+  const total = subTotal + shippingCost;
+
+
   return (
     <>
       <div className="mx-6 lg:mx-20 mt-5 lg:mt-10">
@@ -44,38 +64,26 @@ function CartPage() {
               <p className="text-center">Total</p>
             </div>
             <hr className="mt-5 border-stone-400" />
-            <CheckoutRow
-              productImage={cartLaptop}
-              mobileproductImage={mobileCartLaptop}
-              imageAlt={"Laptop"}
-              productName={"13’ Macbook Air 2020"}
-              color={"Silver"}
-              model={2020}
-              version={"HTNO-24-07"}
-              price={1080}
-            />
-            <hr className="mt-12 border-stone-400" />
-            <CheckoutRow
-              productImage={cartController}
-              mobileproductImage={mobileCartController}
-              imageAlt={"Controller"}
-              productName={"Easy SMX Game Controller"}
-              color={"Silver"}
-              model={2022}
-              version={"HTNO-22-11"}
-              price={95}
-            />
-            <hr className="mt-12 border-stone-500" />
-            <CheckoutRow
-              productImage={cartIphone}
-              mobileproductImage={mobileCartIphone}
-              imageAlt={"Laptop"}
-              productName={"iPhone XSMAX"}
-              color={"Black"}
-              model={2020}
-              version={"HTNO-27-06"}
-              price={270}
-            />
+            {cart.length > 0 ? (
+              cart.map((item, index) => (
+                <div key={index}>
+                  <CheckoutRow
+                    productImage={item.image} // Adjust based on your item structure
+                    mobileproductImage={item.image} // Add mobile image if available
+                    imageAlt={item.productName}
+                    productName={item.productName}
+                    color={item.color} // Adjust as necessary
+                    model={item.model} // Adjust as necessary
+                    id={item.id} // Adjust as necessary
+                    price={item.price}
+                    quantity={item.quantity || 1} // Pass the quantity
+                    onQuantityChange={updateQuantity} // Pass the update function
+                  />
+                </div>
+              ))
+            ) : (
+              <p>Your cart is empty.</p>
+            )}
           </div>
           <hr className="border-stone-400 md:mt-[70px] md:mb-10 my-7" />
           <section className="flex justify-between">
@@ -94,7 +102,7 @@ function CartPage() {
           </section>
           <hr className="border-stone-400 my-10 hidden md:block" />
           <section className="flex flex-col md:flex-row mt-11 md:mt-0 justify-between md:gap-10">
-            <div className="flex flex-col gap-8 md:gap-12 order-2 md:order-none mt-10 md:mt-0">
+            {/* <div className="flex flex-col gap-8 md:gap-12 order-2 md:order-none mt-10 md:mt-0">
               <p className="text-xl font-bold leading-7">
                 You may be interested in
               </p>
@@ -113,13 +121,13 @@ function CartPage() {
                   oldPrice={"$200"}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="font-inter flex flex-col">
               <p className="text-2xl font-bold leading-7">Cart Totals</p>
               <div className="flex flex-col border border-solid border-stone-400 pt-10 pb-16 md:pb-10 mt-8 md:mt-3 text-xl">
                 <div className="flex gap-10 justify-between items-center pl-10 pr-5 md:pr-7">
                   <p className="font-semibold">Subtotal</p>
-                  <p className="font-bold">$2975</p>
+                  <p className="font-bold">${subTotal}</p>
                 </div>
                 <hr className="border-stone-400 ml-10 mr-5 md:mr-7 my-5" />
                 <div className="flex gap-10 justify-between items-start pl-10 pr-5 md:pr-7">
@@ -127,7 +135,7 @@ function CartPage() {
                   <div className="flex flex-col items-end gap-2">
                     <div className="flex justify-end items-center gap-1">
                       <img src={checkbox1} alt="" />
-                      <p>
+                      <p className="text-nowrap">
                         Flat rate: <span className="font-bold">$30.00</span>
                       </p>
                     </div>
@@ -152,7 +160,7 @@ function CartPage() {
                 <hr className="border-stone-400 ml-10 mr-5 md:mr-7 my-5" />
                 <div className="flex gap-10 justify-between items-center pl-10 pr-5 md:pr-7">
                   <p className="font-semibold">Total</p>
-                  <p className="font-bold">$3005.00 </p>
+                  <p className="font-bold">${total}</p>
                 </div>
                 <hr className="border-stone-400 mt-5 mb-10" />
                 <Link to="/checkout">
