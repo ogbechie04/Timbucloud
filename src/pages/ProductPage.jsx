@@ -13,7 +13,7 @@ function ProductPage() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/api/products?organization_id=115305807e2746e893b60d4d9ecee23b&reverse_sort=false&page=1&size=${size}&Appid=V1X2GKWL8HPEEAP&Apikey=8b84c46837194a0ea1f90fe7b452c5d420240712130446321603`
+          `https://timbu-get-all-products.reavdev.workers.dev//?organization_id=115305807e2746e893b60d4d9ecee23b&reverse_sort=false&page=1&size=${size}&Appid=V1X2GKWL8HPEEAP&Apikey=8b84c46837194a0ea1f90fe7b452c5d420240712130446321603`
         );
         const data = await response.json();
 
