@@ -4,7 +4,8 @@ import ListingPage from "./pages/ListingPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
-import NotFound from "./pages/NotFound"
+import NotFound from "./pages/NotFound";
+
 
 function App() {
   return (
