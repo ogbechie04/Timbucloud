@@ -7,13 +7,13 @@ import NavBar from "../components/NavBar";
 function ProductPage() {
   const { name } = useParams();
   const [products, setProducts] = useState([]);
-  const size = 10; // Assuming a page size of 10
+  const size = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://timbu-get-all-products.reavdev.workers.dev//?organization_id=115305807e2746e893b60d4d9ecee23b&reverse_sort=false&page=1&size=${size}&Appid=V1X2GKWL8HPEEAP&Apikey=8b84c46837194a0ea1f90fe7b452c5d420240712130446321603`
+          `https://timbu-get-all-products.reavdev.workers.dev/?organization_id=${import.meta.env.VITE_ORGANIZATION_KEY}&reverse_sort=false&page=1&size=${size}&Appid=${import.meta.env.VITE_APP_ID}&Apikey=${import.meta.env.VITE_API_KEY}`
         );
         const data = await response.json();
 

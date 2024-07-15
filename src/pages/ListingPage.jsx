@@ -19,6 +19,10 @@ function ListingPage() {
   const location = useLocation();
   console.log(location);
 
+  // const organizationID = process.env.ORGANIZATION_KEY
+  // const apiKey = process.env.API_KEY
+  // const appID = process.env.APP_ID
+
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -26,11 +30,19 @@ function ListingPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://timbu-get-all-products.reavdev.workers.dev/?organization_id=115305807e2746e893b60d4d9ecee23b&reverse_sort=false&page=${currentPage}&size=${size}&Appid=V1X2GKWL8HPEEAP&Apikey=8b84c46837194a0ea1f90fe7b452c5d420240712130446321603`
-        );
+        try {
+          console.log("Environment Variables:", {
+            organizationKey: import.meta.env.VITE_ORGANIZATION_KEY,
+            appId: import.meta.env.VITE_APP_ID,
+            apiKey: import.meta.env.VITE_API_KEY
+          });
+
+          const response = await fetch(
+            `https://timbu-get-all-products.reavdev.workers.dev/?organization_id=${import.meta.env.VITE_ORGANIZATION_KEY}&reverse_sort=false&page=${currentPage}&size=${size}&Appid=${import.meta.env.VITE_APP_ID}&Apikey=${import.meta.env.VITE_API_KEY}`
+          );
+
         const data = await response.json();
+        console.log(data)
 
         if (data && data.items && Array.isArray(data.items)) {
           setProducts(data.items);
