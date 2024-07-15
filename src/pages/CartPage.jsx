@@ -68,21 +68,21 @@ function CartPage() {
               cart.map((item, index) => (
                 <div key={index}>
                   <CheckoutRow
-                    productImage={item.image} // Adjust based on your item structure
-                    mobileproductImage={item.image} // Add mobile image if available
+                    productImage={item.image}
+                    mobileproductImage={item.image}
                     imageAlt={item.productName}
                     productName={item.productName}
-                    color={item.color} // Adjust as necessary
-                    model={item.model} // Adjust as necessary
-                    id={item.id} // Adjust as necessary
+                    color={item.color}
+                    model={item.model}
+                    id={item.id}
                     price={item.price}
-                    quantity={item.quantity || 1} // Pass the quantity
-                    onQuantityChange={updateQuantity} // Pass the update function
+                    quantity={item.quantity || 1}
+                    onQuantityChange={updateQuantity}
                   />
                 </div>
               ))
             ) : (
-              <p>Your cart is empty.</p>
+              <p className="text-center text-xl md: text-3xl font-bold md:pt-5 text-mainblue">Your cart is empty.</p>
             )}
           </div>
           <hr className="border-stone-400 md:mt-[70px] md:mb-10 my-7" />
@@ -102,26 +102,6 @@ function CartPage() {
           </section>
           <hr className="border-stone-400 my-10 hidden md:block" />
           <section className="flex flex-col md:flex-row mt-11 md:mt-0 justify-between md:gap-10">
-            {/* <div className="flex flex-col gap-8 md:gap-12 order-2 md:order-none mt-10 md:mt-0">
-              <p className="text-xl font-bold leading-7">
-                You may be interested in
-              </p>
-              <div className="flex flex-col md:flex-row gap-10 md:gap-12 items-center">
-                <ProductCard
-                  image={smallAirpods}
-                  imageAlt={"airpods pro"}
-                  productName={"Airpods Pro"}
-                  price={"$400"}
-                />
-                <ProductCard
-                  image={blackAirpods}
-                  imageAlt={"black wireless airpods"}
-                  productName={"Black Wireless Pods"}
-                  price={"$180"}
-                  oldPrice={"$200"}
-                />
-              </div>
-            </div> */}
             <div className="font-inter flex flex-col">
               <p className="text-2xl font-bold leading-7">Cart Totals</p>
               <div className="flex flex-col border border-solid border-stone-400 pt-10 pb-16 md:pb-10 mt-8 md:mt-3 text-xl">

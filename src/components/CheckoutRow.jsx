@@ -20,7 +20,7 @@ function CheckoutRow({
   const handleIncrement = () => {
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
-      onQuantityChange(id, newQuantity); // Notify parent of change
+      onQuantityChange(id, newQuantity); 
       return newQuantity;
     });
   };
@@ -29,18 +29,18 @@ function CheckoutRow({
     setQuantity((prevQuantity) => {
       if (prevQuantity > 1) {
         const newQuantity = prevQuantity - 1;
-        onQuantityChange(id, newQuantity); // Notify parent of change
+        onQuantityChange(id, newQuantity);
         return newQuantity;
       }
-      return prevQuantity; // Do not allow decrement below 1
+      return prevQuantity;
     });
   };
 
   const total = price * quantity;
 
   const handleRemove = () => {
-    const itemToRemove = { id }; // Only include the id to identify the item
-    removeItem(itemToRemove); // Call removeItem from useCart
+    const itemToRemove = { id };
+    removeItem(itemToRemove);
   };
 
   return (
